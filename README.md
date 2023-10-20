@@ -3,11 +3,11 @@
 
 ## Atualize os seus dados
 
-- Nome:
-- Matrícula:
-- Curso:
-- Semestre/Ano correntes:
-- Link para o seu GitHub:
+- Nome: Marco Túlio Marcelino Dutra
+- Matrícula: 21.1.8044
+- Curso: Sistemas de Informação
+- Semestre/Ano correntes: 2023/2
+- Link para o seu GitHub: <https://github.com/MarcoTuMD>
 
 ## [Projeto final:](./Projeto/README.md)
 
