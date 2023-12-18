@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model TiposSanguineos {
+  id         Int      @id @default(autoincrement())
+  tipo       String
+  fator      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  pessoas    Pessoas[]
+}
+
+model Estados {
+  id         Int      @id @default(autoincrement())
+  nome       String
+  sigla      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  cidades    Cidades[]
+}
+
+model Cidades {
+  id         Int      @id @default(autoincrement())
+  nome       String
+  estado     Estados  @relation(fields: [estadoId], references: [id])
+  estadoId   Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  pessoas    Pessoas[]
+  locaisColeta LocaisColeta[] 
+}
+
+model Pessoas {
+  id           Int           @id @default(autoincrement())
+  nome         String
+  rua          String
+  numero       String
+  complemento  String
+  rg           String
+  cidade       Cidades       @relation(fields: [cidadeId], references: [id])
+  cidadeId     Int
+  tipoSanguineo TiposSanguineos @relation(fields: [tipoId], references: [id])
+  tipoId       Int
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
+  doacoes      Doacoes[]
+}
+
+model LocaisColeta {
+  id         Int      @id @default(autoincrement())
+  nome       String
+  rua        String
+  numero     String
+  complemento  String
+  cidade     Cidades  @relation(fields: [cidadeId], references: [id])
+  cidadeId   Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  doacoes    Doacoes[]
+}
+
+model Doacoes {
+  id         Int        @id @default(autoincrement())
+  pessoa     Pessoas    @relation(fields: [pessoaId], references: [id])
+  pessoaId   Int
+  local      LocaisColeta @relation(fields: [localId], references: [id])
+  localId    Int
+  data       DateTime
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+}
