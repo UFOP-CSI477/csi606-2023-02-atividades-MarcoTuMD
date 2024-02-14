@@ -13,6 +13,14 @@ const PORT = 5000
 // Routes
 
 server.use(express.json())
+
+server.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+
 server.get('/', (request, response) => {
     response.json({
         message: 'Status: Server is running.'

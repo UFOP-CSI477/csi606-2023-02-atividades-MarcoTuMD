@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Corrida {
+  id         Int         @id @default(autoincrement())
+  data       String   
+  duracao    Float
+  distancia  Float
+  bpm        Int
+  local      Local       @relation(fields: [localId], references: [id])
+  localId    Int
+  equipameto Equipamento @relation(fields: [equipamentoId], references: [id])
+  equipamentoId Int
+}
+
+model Equipamento {
+  id              Int     @id @default(autoincrement())
+  nome            String
+  dtPrimeiroUso   String
+  distanciaUso    Float @default(0)
+  corridas        Corrida[]
+}
+
+model Local {
+  id       Int     @id @default(autoincrement())
+  nome     String
+  corridas Corrida[]
+}
